@@ -1,0 +1,1 @@
+For the first step in learning how to program autonomous, lets get started with a simple "Drive Forward" autonomous program.
