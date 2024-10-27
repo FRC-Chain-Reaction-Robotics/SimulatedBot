@@ -1,1 +1,9 @@
 For the first step in learning how to program autonomous, lets get started with a simple "Drive Forward" autonomous program.
+
+1. Create a new DriveToDistance.java file in the appropriate spot for autonomous commands (its under the java/frc/robot/commands/auto folder b/c we are making an autonomous command)
+2. Autonomous commands function differently than normal commands that are used in Teleop,
+     instead of being directly referenced by any specific system, they are directly ran by 
+     the DriverStation and selected before a match (we will talk about how to do that soon)
+3. Extend the class PIDCommand and create overriding methods for the abstract methods in that class (i will clarify what this means)
+4. Additionally override isFinished()
+5.
