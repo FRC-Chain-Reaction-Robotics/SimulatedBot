@@ -36,7 +36,9 @@ public class RobotContainer {
   private void configureBindings() {
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleSim);
-      SmartDashboard.putData("Desired Angle: ", (Double) -> driverXbox.getRawAxis(2));   }
+    } else {
+      
+    }
   }
 
   public Command getAutonomousCommand() {

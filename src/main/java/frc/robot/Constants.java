@@ -1,5 +1,8 @@
 package frc.robot;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
