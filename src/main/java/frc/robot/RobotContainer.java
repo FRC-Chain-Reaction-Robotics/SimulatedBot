@@ -6,12 +6,15 @@ package frc.robot;
 
 import java.io.IOException;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -22,6 +25,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer {
   private SwerveSubsystem drivebase = new SwerveSubsystem();
   final CommandXboxController driverXbox = new CommandXboxController(0);
+  private final SendableChooser<Command> autoChooser;
 
   Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
       () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), 0.15),
@@ -31,10 +35,17 @@ public class RobotContainer {
     );
 
   public RobotContainer() {
+    autoChooser = AutoBuilder.buildAutoChooser();
+    // or alternatively to select a default use
+    // autoChooser = AutoBuilder.buildAutoChooser("Default Auto");
+    
     configureBindings();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   private void configureBindings() {
+    
+
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleSim);
     } else {
@@ -43,6 +54,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new Activity1Command(0.5, 1, 0.002, drivebase);
+    return autoChooser.getSelected();
   }
 }

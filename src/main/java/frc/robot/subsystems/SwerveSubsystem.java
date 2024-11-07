@@ -61,19 +61,22 @@ public class SwerveSubsystem extends SubsystemBase {
         }
 
         pathFollowerConfig = new HolonomicPathFollowerConfig(
-                new PIDConstants( // translation constants
-                        (Double) pidfDriveConfig.get("p"),
-                        (Double) pidfDriveConfig.get("i"),
-                        (Double) pidfDriveConfig.get("d"),
-                        (Double) pidfDriveConfig.get("iz")),
-                new PIDConstants( // rotation constants
-                        (Double) pidfAngleConfig.get("p"),
-                        (Double) pidfAngleConfig.get("i"),
-                        (Double) pidfAngleConfig.get("d"),
-                        (Double) pidfAngleConfig.get("iz")),
-                Constants.Swerve.MAX_SPEED,
-                ((Double) driveProperties.get("diameter")) / 2,
-                new ReplanningConfig());
+            new PIDConstants( // translation constants
+                (Double) pidfDriveConfig.get("p"),
+                (Double) pidfDriveConfig.get("i"),
+                (Double) pidfDriveConfig.get("d"),
+                (Double) pidfDriveConfig.get("iz")
+            ),
+            new PIDConstants( // rotation constants
+                (Double) pidfAngleConfig.get("p"),
+                (Double) pidfAngleConfig.get("i"),
+                (Double) pidfAngleConfig.get("d"),
+                (Double) pidfAngleConfig.get("iz")
+            ),
+            Constants.Swerve.MAX_SPEED,
+            ((Double) driveProperties.get("diameter"))/2,
+            new ReplanningConfig(true, true)
+        );
 
         // These two final lines are only needed for simulation purposes, they are
         // configured based on control method of a real bot
@@ -171,7 +174,9 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void resetPose(Pose2d pose) {
-        swerveDrive.resetOdometry(pose);
+        if (Robot.isReal()) {
+            swerveDrive.resetOdometry(pose);
+        }
     }
 
     public ChassisSpeeds getCurrentSpeeds() {
