@@ -74,7 +74,7 @@ public class SwerveSubsystem extends SubsystemBase {
             ),
             Constants.Swerve.MAX_SPEED,
             ((Double) driveProperties.get("diameter"))/2,
-            new ReplanningConfig()
+            new ReplanningConfig(true, true)
         );
 
         // These two final lines are only needed for simulation purposes, they are
@@ -157,7 +157,9 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void resetPose(Pose2d pose) {
-        swerveDrive.resetOdometry(pose);
+        if (Robot.isReal()) {
+            swerveDrive.resetOdometry(pose);
+        }
     }
 
     public ChassisSpeeds getCurrentSpeeds() {
